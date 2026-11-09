@@ -146,28 +146,6 @@ Details and the shape of each simulation step are in [docs/api.md](docs/api.md).
 - [Testing](docs/testing.md): automated tests and a manual checklist
 - [Contributing](CONTRIBUTING.md): how to run the project and open a pull request
 
-## Deployment
-
-The frontend runs on Vercel and the backend on Render. Neither needs a secret, the only configuration is two public URLs.
-
-### Backend on Render
-
-1. Create a new **Blueprint** from this repository. Render reads `render.yaml` and creates the `nrs-api` web service.
-2. Set `CORS_ORIGINS` to your Vercel URL, for example `https://nrs.vercel.app`. Use a comma to allow more than one origin. No trailing slash needed.
-3. Deploy and note the service URL, for example `https://nrs-api.onrender.com`.
-
-`ENVIRONMENT=production` is already set in the blueprint, which turns off the interactive API docs. On the free plan the service sleeps after inactivity, so the first request can take up to a minute. The simulator keeps retrying the health check while it wakes up.
-
-### Frontend on Vercel
-
-1. Import the repository and set the **Root Directory** to `frontend`. Vercel detects Vite and reads `frontend/vercel.json`.
-2. Add the environment variable `VITE_API_URL` with the Render service URL, no trailing slash.
-3. Deploy. `VITE_API_URL` is baked in at build time, so redeploy after changing it.
-
-`vercel.json` adds a strict Content-Security-Policy and the usual security headers. It allows API calls to `*.onrender.com`; if you use a custom domain for the backend, add it to `connect-src`.
-
-Vercel preview deployments get their own URLs and are not covered by `CORS_ORIGINS`, so they cannot reach the API unless you add those origins.
-
 ## Scope
 
 In scope: the three routing modes, step-by-step visualization, failure simulation and comparison.
