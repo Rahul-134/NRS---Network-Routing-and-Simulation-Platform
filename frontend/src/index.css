@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import "./theme-light.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-black);
+  color: var(--color-neutral-200);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.react-flow {
+  background: var(--color-black);
+}
+
+.react-flow__attribution {
+  background: transparent;
+  color: var(--color-neutral-600);
+}
+
+.react-flow__attribution a {
+  color: var(--color-neutral-600);
+}
+
+.tool-router .react-flow__pane {
+  cursor: crosshair;
+}
+
+input[type='number'].plain-number::-webkit-outer-spin-button,
+input[type='number'].plain-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'].plain-number {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-700) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-700);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.canvas-panel {
+  margin-bottom: 28px;
+}
+
+@media (min-width: 1280px) {
+  .legend-panel {
+    margin-right: 195px;
+  }
+}
+
+@keyframes route-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.route-flow {
+  stroke-dasharray: 2 14;
+  stroke-linecap: round;
+  animation: route-flow 0.9s linear infinite;
+}
+
+.route-flow-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes hero-route {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  62%,
+  90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.hero-route {
+  stroke-dasharray: 1;
+  animation: hero-route 10s ease-in-out infinite;
+}
+
+.hero-node {
+  opacity: 0;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-route {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .hero-node {
+    animation: none;
+    opacity: 1;
+  }
+
+  .route-flow {
+    animation: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
