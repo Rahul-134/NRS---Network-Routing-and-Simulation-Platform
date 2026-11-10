@@ -12,6 +12,7 @@ import overviewDark from '../assets/landing/overview-dark.mp4'
 import overviewLight from '../assets/landing/overview-light.mp4'
 import LiquidNavbar from '../components/LiquidNavbar'
 import ToolIcon from '../components/ToolIcons'
+import Footer from '../components/landing/Footer'
 import GradientASCII from '../components/landing/GradientASCII'
 import HeroNetwork from '../components/landing/HeroNetwork'
 import { techLogos } from '../components/landing/techLogos'
@@ -424,12 +425,7 @@ export default function Landing() {
         </section>
       </main>
 
-      <footer className="border-t border-neutral-800 py-8">
-        <div className={`${container} flex flex-col items-center justify-between gap-3 text-sm text-neutral-500 sm:flex-row`}>
-          <span>NRS &middot; Network Routing &amp; Simulation</span>
-          <span>Dijkstra &middot; Distance Vector &middot; Link State</span>
-        </div>
-      </footer>
+      <Footer logo={theme === 'light' ? logoLight : logoDark} container={container} />
     </div>
   )
 }
