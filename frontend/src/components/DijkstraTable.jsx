@@ -8,6 +8,16 @@ const sizes = {
 
 const show = (d) => (d === null ? '∞' : d)
 
+// Scrolls only the card that holds the table, never the page, so the canvas stays in view on small screens.
+function revealInPanel(el) {
+  const panel = el?.closest('[data-panel]')
+  if (!panel || panel.scrollHeight <= panel.clientHeight) return
+  const inner = el.getBoundingClientRect()
+  const outer = panel.getBoundingClientRect()
+  if (inner.bottom > outer.bottom) panel.scrollTop += inner.bottom - outer.bottom
+  else if (inner.top < outer.top) panel.scrollTop -= outer.top - inner.top
+}
+
 export default function DijkstraTable({
   result,
   index,
@@ -30,7 +40,7 @@ export default function DijkstraTable({
   const complete = !!result && index >= result.steps.length - 1
 
   useEffect(() => {
-    if (!interactive) (complete ? answer.current : lastRow.current)?.scrollIntoView({ block: 'nearest' })
+    if (!interactive) revealInPanel(complete ? answer.current : lastRow.current)
   }, [picks.length, complete, interactive])
 
   if (!result || picks.length === 0) return <p className="text-xs text-neutral-500">{emptyText}</p>

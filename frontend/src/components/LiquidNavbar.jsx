@@ -54,7 +54,7 @@ const NIMBUS_CSS = `
 .nimbus-nav[data-size="sm"] .nimbus-item{height:36px;padding:0 14px;font-size:13px}
 .nimbus-nav[data-compact="true"] .nimbus-item{padding:0 13px}
 .nimbus-nav[data-compact="true"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (max-width:520px){.nimbus-nav:not([data-compact="false"]) .nimbus-item{padding:0 13px}.nimbus-nav:not([data-compact="false"]) .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (max-width:520px){.nimbus-nav:not([data-compact="false"]) .nimbus-item{padding:0 13px}.nimbus-nav:not([data-compact="false"]) .nimbus-item:not([aria-current]) .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 @media (prefers-reduced-motion:reduce){.nv-ico svg,.nv-ico::before,.nv-ico::after{animation:none!important;transition:none}}
 `
 

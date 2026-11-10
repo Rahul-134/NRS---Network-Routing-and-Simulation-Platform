@@ -50,13 +50,17 @@ function Gradient({ id, from, to }) {
   )
 }
 
-function Letters({ className, style, defs }) {
+function Letters({ className, style, defs, rim }) {
   return (
     <svg viewBox="0 0 900 330" aria-hidden="true" className={`absolute inset-x-0 top-0 h-auto w-full ${className ?? ''}`} style={style}>
       {defs && (
         <defs>
           <Gradient id="nrs-edge" from="var(--color-emerald-300)" to="var(--color-cyan-300)" />
           <Gradient id="nrs-glow" from="var(--color-emerald-400)" to="var(--color-cyan-400)" />
+          <filter id="nrs-rim" x="-5%" y="-5%" width="110%" height="110%">
+            <feMorphology in="SourceAlpha" operator="erode" radius="2" result="inside" />
+            <feComposite in="SourceGraphic" in2="inside" operator="out" />
+          </filter>
         </defs>
       )}
       <text
@@ -68,7 +72,7 @@ function Letters({ className, style, defs }) {
         fontSize="330"
         fontWeight="800"
         fill="currentColor"
-        style={{ fill: 'var(--fill, currentColor)', stroke: 'var(--stroke, none)', strokeWidth: 'var(--stroke-width, 0)' }}
+        style={{ fill: 'var(--fill, currentColor)', filter: rim ? 'url(#nrs-rim)' : undefined }}
       >
         NRS
       </text>
@@ -128,10 +132,7 @@ function Wordmark() {
     >
       <Letters className="text-neutral-900" defs />
       <Letters className="transition-opacity duration-500" style={{ ...spot(260), '--fill': 'url(#nrs-glow)', fillOpacity: 0.16 }} />
-      <Letters
-        className="text-transparent transition-opacity duration-500"
-        style={{ ...spot(170), '--stroke': 'url(#nrs-edge)', '--stroke-width': '2' }}
-      />
+      <Letters rim className="transition-opacity duration-500" style={{ ...spot(170), '--fill': 'url(#nrs-edge)' }} />
     </div>
   )
 }

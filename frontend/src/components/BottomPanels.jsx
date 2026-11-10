@@ -9,7 +9,7 @@ import { algorithms } from '../utils/algorithms'
 
 function Card({ title, subtitle, action, children }) {
   return (
-    <div className="min-h-0 overflow-y-auto rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
+    <div data-panel className="min-h-0 overflow-y-auto rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
       <div className="mb-2.5 flex items-start justify-between gap-2">
         <div>
           <h2 className="text-[15px] font-semibold leading-tight text-white">{title}</h2>
