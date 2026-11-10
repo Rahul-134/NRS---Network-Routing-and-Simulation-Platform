@@ -3,7 +3,13 @@ import { linkCost } from '../utils/shortestPath'
 
 const sizes = {
   compact: { cell: 'px-2.5 py-1.5 text-sm', head: 'px-2.5 py-1.5 text-xs', ring: 'h-7 min-w-7 px-1', text: 'text-sm', tick: 'h-4' },
-  large: { cell: 'px-5 py-3.5 text-lg', head: 'px-5 py-3.5 text-base', ring: 'h-10 min-w-10 px-1.5', text: 'text-lg', tick: 'h-5' },
+  large: {
+    cell: 'px-2.5 py-2 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
+    head: 'px-2.5 py-2 text-sm sm:px-5 sm:py-3.5 sm:text-base',
+    ring: 'h-8 min-w-8 px-1 text-sm sm:h-10 sm:min-w-10 sm:px-1.5 sm:text-lg',
+    text: 'text-base sm:text-lg',
+    tick: 'h-4 sm:h-5',
+  },
 }
 
 const show = (d) => (d === null ? '∞' : d)
@@ -112,11 +118,15 @@ export default function DijkstraTable({
 
   return (
     <div>
-      <div className="overflow-x-auto">
-        <table className="border-collapse text-center tabular-nums">
+      <div className={interactive ? 'max-h-[50vh] overflow-auto' : 'overflow-x-auto'}>
+        <table className="border-separate border-spacing-0 text-center tabular-nums">
           <thead onMouseLeave={() => setHover(null)}>
             <tr>
-              <th className={`${s.head} border-b-2 border-r-2 border-neutral-600 text-left font-semibold text-neutral-400`}>Pick</th>
+              <th
+                className={`${s.head} sticky left-0 top-0 z-20 border-b-2 border-r-2 border-neutral-600 bg-neutral-900 text-left font-semibold text-neutral-400`}
+              >
+                Pick
+              </th>
               {nodes.map((n) => {
                 const tone =
                   n.id === sourceId ? 'text-emerald-400' : n.id === destinationId ? 'text-rose-400' : 'text-neutral-300'
@@ -125,9 +135,9 @@ export default function DijkstraTable({
                   <th
                     key={n.id}
                     onMouseEnter={interactive ? () => setHover({ r: null, c: n.id }) : undefined}
-                    className={`border-b-2 p-0 font-semibold transition-colors ${
+                    className={`sticky top-0 z-10 border-b-2 p-0 font-semibold transition-colors ${
                       onRoute.has(n.id) ? 'border-emerald-500' : 'border-neutral-600'
-                    } ${lit ? 'bg-white/[0.06]' : ''} ${tone}`}
+                    } ${lit ? 'bg-neutral-800' : 'bg-neutral-900'} ${tone}`}
                   >
                     {interactive && onPickColumn ? (
                       <button
@@ -156,9 +166,9 @@ export default function DijkstraTable({
                 <tr key={p.step} ref={latest ? lastRow : undefined} className={latest ? 'bg-neutral-800/40' : ''}>
                   <th
                     onMouseEnter={interactive ? () => setHover({ r, c: null }) : undefined}
-                    className={`${s.cell} border-r-2 border-neutral-600 text-left font-semibold transition-colors ${
+                    className={`${s.cell} sticky left-0 z-10 border-r-2 border-neutral-600 text-left font-semibold transition-colors ${
                       onRoute.has(p.current) ? 'text-emerald-300' : 'text-neutral-100'
-                    } ${interactive && hover?.r === r && hover.c === null ? 'bg-white/[0.06]' : ''}`}
+                    } ${interactive && hover?.r === r && hover.c === null ? 'bg-neutral-800' : 'bg-neutral-900'}`}
                   >
                     {labelOf(p.current)}
                   </th>
