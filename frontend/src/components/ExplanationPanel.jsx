@@ -8,7 +8,7 @@ export default function ExplanationPanel({ sim, algorithm, algorithmName, nodes 
   const [open, setOpen] = useState(false)
 
   return (
-    <section className="sticky bottom-0 bg-black py-3.5">
+    <section className="bg-black py-3.5 lg:sticky lg:bottom-0">
       <PanelHeader title="Explanation" subtitle="Why the algorithm made each step" />
       <button className={`${btn} w-full py-2.5 text-sm`} disabled={!sim.result} onClick={() => setOpen(true)}>
         <ToolIcon name="spark" size={16} />

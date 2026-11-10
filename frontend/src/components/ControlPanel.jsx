@@ -1,13 +1,8 @@
 import Icon from './icons'
 import PanelHeader from './PanelHeader'
 import Select from './Select'
+import { speeds } from '../utils/speeds'
 import { btn } from '../utils/ui'
-
-const speeds = [
-  ['Slow', 1500],
-  ['Normal', 800],
-  ['Fast', 300],
-]
 
 const statusStyles = {
   idle: 'border-neutral-700 text-neutral-300',

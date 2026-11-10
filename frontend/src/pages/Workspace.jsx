@@ -7,6 +7,7 @@ import AlgorithmState from '../components/AlgorithmState'
 import RouterOverview from '../components/RouterOverview'
 import ExplanationPanel from '../components/ExplanationPanel'
 import BottomPanels from '../components/BottomPanels'
+import MobileDock from '../components/MobileDock'
 import ComparisonPanel from '../components/ComparisonPanel'
 import { useTopology } from '../hooks/useTopology'
 import { useSimulation } from '../hooks/useSimulation'
@@ -317,7 +318,7 @@ export default function Workspace() {
         />
       )}
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:grid lg:grid-cols-[260px_minmax(0,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_250px] lg:overflow-hidden">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pb-32 lg:grid lg:grid-cols-[260px_minmax(0,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_250px] lg:overflow-hidden lg:pb-0">
         <aside className="lg:row-span-2 border-b border-neutral-800 bg-black lg:overflow-y-auto lg:border-b-0 lg:border-r">
           <ToolPanel
             tool={tool}
@@ -396,6 +397,18 @@ export default function Workspace() {
           />
         </section>
       </div>
+      <MobileDock
+        algorithm={algorithm}
+        onAlgorithm={setAlgorithm}
+        nodes={topology.nodes}
+        sourceId={sourceId}
+        destinationId={destinationId}
+        onSource={changeSource}
+        onDestination={setDestination}
+        sim={sim}
+        tool={tool}
+        onTool={selectTool}
+      />
     </div>
   )
 }
