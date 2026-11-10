@@ -41,9 +41,24 @@ const spot = (radius) => {
   return { maskImage: mask, WebkitMaskImage: mask, opacity: 'var(--o)' }
 }
 
-function Letters({ className, style }) {
+function Gradient({ id, from, to }) {
+  return (
+    <linearGradient id={id} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="900" y2="0">
+      <stop offset="0" style={{ stopColor: from }} />
+      <stop offset="1" style={{ stopColor: to }} />
+    </linearGradient>
+  )
+}
+
+function Letters({ className, style, defs }) {
   return (
     <svg viewBox="0 0 900 330" aria-hidden="true" className={`absolute inset-x-0 top-0 h-auto w-full ${className ?? ''}`} style={style}>
+      {defs && (
+        <defs>
+          <Gradient id="nrs-edge" from="var(--color-emerald-300)" to="var(--color-cyan-300)" />
+          <Gradient id="nrs-glow" from="var(--color-emerald-400)" to="var(--color-cyan-400)" />
+        </defs>
+      )}
       <text
         x="450"
         y="300"
@@ -53,7 +68,7 @@ function Letters({ className, style }) {
         fontSize="330"
         fontWeight="800"
         fill="currentColor"
-        style={{ stroke: 'var(--stroke, none)', strokeWidth: 'var(--stroke-width, 0)' }}
+        style={{ fill: 'var(--fill, currentColor)', stroke: 'var(--stroke, none)', strokeWidth: 'var(--stroke-width, 0)' }}
       >
         NRS
       </text>
@@ -64,17 +79,17 @@ function Letters({ className, style }) {
 function Wordmark() {
   const ref = useRef(null)
 
-  const place = (x, y, on) => {
+  const place = (x, y) => {
     const el = ref.current
     el.style.setProperty('--x', `${x}px`)
     el.style.setProperty('--y', `${y}px`)
-    el.style.setProperty('--o', on ? '1' : '0')
+    el.style.setProperty('--o', '1')
   }
 
   const onMove = (e) => {
     if (e.pointerType === 'touch') return
     const rect = ref.current.getBoundingClientRect()
-    place(e.clientX - rect.left, e.clientY - rect.top, true)
+    place(e.clientX - rect.left, e.clientY - rect.top)
   }
 
   useEffect(() => {
@@ -92,7 +107,7 @@ function Wordmark() {
     const tick = (t) => {
       if (visible) {
         const { width, height } = el.getBoundingClientRect()
-        place(width * (0.1 + 0.8 * ((Math.sin(t / 1800) + 1) / 2)), height * 0.5, true)
+        place(width * (0.1 + 0.8 * ((Math.sin(t / 1800) + 1) / 2)), height * 0.5)
       }
       frame = requestAnimationFrame(tick)
     }
@@ -107,18 +122,15 @@ function Wordmark() {
     <div
       ref={ref}
       onPointerMove={onMove}
-      onPointerLeave={(e) => e.pointerType !== 'touch' && place(0, 0, false)}
+      onPointerLeave={(e) => e.pointerType !== 'touch' && ref.current.style.setProperty('--o', '0')}
       style={{ '--x': '50%', '--y': '50%', '--o': 0 }}
       className="relative mx-auto w-full max-w-6xl select-none overflow-hidden aspect-[900/250]"
     >
-      <Letters className="text-neutral-900" />
-      <Letters
-        className="text-white/10 transition-opacity duration-500"
-        style={spot(260)}
-      />
+      <Letters className="text-neutral-900" defs />
+      <Letters className="transition-opacity duration-500" style={{ ...spot(260), '--fill': 'url(#nrs-glow)', fillOpacity: 0.16 }} />
       <Letters
         className="text-transparent transition-opacity duration-500"
-        style={{ ...spot(170), '--stroke': 'var(--color-white)', '--stroke-width': '1.6' }}
+        style={{ ...spot(170), '--stroke': 'url(#nrs-edge)', '--stroke-width': '2' }}
       />
     </div>
   )
@@ -130,7 +142,7 @@ function FooterLink({ href, children }) {
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="text-sm text-neutral-400 transition-colors hover:text-white"
+      className="text-sm text-neutral-400 transition-colors hover:text-emerald-300"
     >
       {children}
     </a>
@@ -144,8 +156,8 @@ export default function Footer({ logo, container }) {
         <Wordmark />
       </div>
       <div aria-hidden="true" className="relative h-px">
-        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(60%_100%_at_50%_0%,color-mix(in_oklab,var(--color-white)_7%,transparent),transparent)]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-400/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(60%_100%_at_50%_0%,color-mix(in_oklab,var(--color-emerald-400)_14%,transparent),transparent)]" />
       </div>
 
       <div className={`${container} relative grid gap-12 py-14 sm:py-16 lg:grid-cols-[1.4fr_2fr]`}>
@@ -159,7 +171,7 @@ export default function Footer({ logo, container }) {
             target="_blank"
             rel="noreferrer"
             aria-label="NRS on GitHub"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 text-neutral-400 transition-colors hover:border-neutral-600 hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 text-neutral-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-300"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px] fill-current">
               <path d={githubPath} />
