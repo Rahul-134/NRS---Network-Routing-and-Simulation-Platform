@@ -21,6 +21,16 @@ const navItems = algorithms.map((a) => ({
 const action =
   'inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-lg px-3.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40'
 
+function ApiStatus({ backend, className }) {
+  const current = status[backend]
+  return (
+    <span className={`items-center gap-2 rounded-full border border-neutral-800 px-3 py-1 text-xs ${current.text} ${className}`}>
+      <span className={`h-2 w-2 rounded-full ${current.dot}`} />
+      API {backend}
+    </span>
+  )
+}
+
 export default function TopBar({
   algorithm,
   onAlgorithm,
@@ -31,14 +41,13 @@ export default function TopBar({
   theme,
   onToggleTheme,
 }) {
-  const current = status[backend]
-
   return (
     <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-neutral-800 bg-black px-5 py-2.5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
-      <div className="order-1 flex items-center">
+      <div className="order-1 flex flex-col items-start gap-1.5 sm:flex-row sm:items-center">
         <a href="/" title="Back to the home page">
           <img src={theme === 'light' ? logoLight : logoDark} alt="NRS - Network Routing & Simulation" className="h-12 w-auto" />
         </a>
+        <ApiStatus backend={backend} className="inline-flex sm:hidden" />
       </div>
 
       <div className="order-3 flex w-full justify-center lg:order-2 lg:w-auto">
@@ -53,12 +62,7 @@ export default function TopBar({
       </div>
 
       <div className="order-2 ml-auto flex items-center justify-end gap-3 lg:order-3">
-        <span
-          className={`hidden items-center gap-2 rounded-full border border-neutral-800 px-3 py-1 text-xs sm:inline-flex ${current.text}`}
-        >
-          <span className={`h-2 w-2 rounded-full ${current.dot}`} />
-          API {backend}
-        </span>
+        <ApiStatus backend={backend} className="hidden sm:inline-flex" />
         <span className="hidden h-6 w-px bg-neutral-800 sm:block" />
         <button
           className={`${action} border border-neutral-600 bg-neutral-900 text-white hover:bg-neutral-800`}
