@@ -11,6 +11,7 @@ import comparisonLight from '../assets/landing/comparison-light.mp4'
 import overviewDark from '../assets/landing/overview-dark.mp4'
 import overviewLight from '../assets/landing/overview-light.mp4'
 import LiquidNavbar from '../components/LiquidNavbar'
+import TargetCursor from '../components/TargetCursor'
 import ToolIcon from '../components/ToolIcons'
 import Footer from '../components/landing/Footer'
 import GradientASCII from '../components/landing/GradientASCII'
@@ -113,9 +114,9 @@ const heroColors = ['#047857', '#ecfdf5', '#6ee7b7', '#22d3ee']
 
 const container = 'mx-auto w-full max-w-6xl px-5 sm:px-8'
 const primary =
-  'inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-neutral-100 px-5 text-sm font-semibold text-black transition-colors hover:bg-white'
+  'cursor-target inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-neutral-100 px-5 text-sm font-semibold text-black transition-colors hover:bg-white'
 const secondary =
-  'inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-neutral-700 px-5 text-sm font-medium text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-white'
+  'cursor-target inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-neutral-700 px-5 text-sm font-medium text-neutral-200 transition-colors hover:bg-neutral-900 hover:text-white'
 
 function Heading({ eyebrow, title, text }) {
   return (
@@ -194,9 +195,10 @@ export default function Landing() {
 
   return (
     <div className="min-h-full bg-black text-neutral-200">
+      <TargetCursor />
       <header className="sticky top-0 z-20 bg-linear-to-b from-black/90 via-black/60 to-transparent">
         <div className={`${container} flex h-16 items-center justify-between gap-4`}>
-          <a href="/" aria-label="NRS home">
+          <a href="/" aria-label="NRS home" className="cursor-target block rounded-md">
             <img src={theme === 'light' ? logoLight : logoDark} alt="NRS - Network Routing & Simulation" className="h-12 w-auto" />
           </a>
           <div className="hidden md:block">
@@ -214,11 +216,11 @@ export default function Landing() {
               onClick={toggle}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-800 text-neutral-300 transition-colors hover:bg-neutral-900 hover:text-white"
+              className="cursor-target flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-800 text-neutral-300 transition-colors hover:bg-neutral-900 hover:text-white"
             >
               <ToolIcon name={theme === 'dark' ? 'sun' : 'moon'} size={17} />
             </button>
-            <a href="/app" className="inline-flex h-9 items-center whitespace-nowrap rounded-lg bg-neutral-100 px-4 text-sm font-semibold text-black transition-colors hover:bg-white">
+            <a href="/app" data-cursor-label="Open" className="cursor-target inline-flex h-9 items-center whitespace-nowrap rounded-lg bg-neutral-100 px-4 text-sm font-semibold text-black transition-colors hover:bg-white">
               Open simulator
             </a>
           </div>
@@ -248,7 +250,7 @@ export default function Landing() {
                 Link State one decision at a time.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="/app" className={primary}>
+                <a href="/app" data-cursor-label="Open" className={primary}>
                   Open simulator
                   <ToolIcon name="pointer" size={16} />
                 </a>
@@ -296,7 +298,7 @@ export default function Landing() {
               {modes.map((m) => (
                 <article
                   key={m.key}
-                  className={`group flex flex-col rounded-2xl border border-neutral-800 bg-neutral-950 p-6 transition duration-200 hover:bg-neutral-900 hover:shadow-xl motion-safe:hover:-translate-y-1 ${m.hover}`}
+                  className={`cursor-target group flex flex-col rounded-2xl border border-neutral-800 bg-neutral-950 p-6 transition duration-200 hover:bg-neutral-900 hover:shadow-xl motion-safe:hover:-translate-y-1 ${m.hover}`}
                 >
                   <span
                     className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-transform duration-200 group-hover:scale-110 ${m.accent}`}
@@ -328,7 +330,7 @@ export default function Landing() {
               {steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="group rounded-2xl border border-neutral-800 bg-black p-6 transition duration-200 hover:border-emerald-500/40 hover:bg-neutral-900 hover:shadow-xl hover:shadow-emerald-500/10 motion-safe:hover:-translate-y-1"
+                  className="cursor-target group rounded-2xl border border-neutral-800 bg-black p-6 transition duration-200 hover:border-emerald-500/40 hover:bg-neutral-900 hover:shadow-xl hover:shadow-emerald-500/10 motion-safe:hover:-translate-y-1"
                 >
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-500/40 text-sm font-semibold text-emerald-400 transition-colors duration-200 group-hover:border-emerald-400 group-hover:bg-emerald-500/15">
                     {i + 1}
@@ -365,7 +367,7 @@ export default function Landing() {
             />
             <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-800 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((f) => (
-                <div key={f.title} className="bg-black p-7 transition-colors hover:bg-neutral-950">
+                <div key={f.title} className="cursor-target bg-black p-7 transition-colors hover:bg-neutral-950">
                   <span className="text-emerald-400">
                     <ToolIcon name={f.icon} size={22} />
                   </span>
@@ -395,7 +397,7 @@ export default function Landing() {
                 <li
                   key={tech.name}
                   style={{ '--brand': tech.color }}
-                  className="group flex items-center gap-3 rounded-xl border border-neutral-800 bg-black px-5 py-3 text-sm font-medium text-neutral-200 transition duration-200 hover:border-(--brand) hover:bg-neutral-900 hover:text-white motion-safe:hover:-translate-y-0.5"
+                  className="cursor-target group flex items-center gap-3 rounded-xl border border-neutral-800 bg-black px-5 py-3 text-sm font-medium text-neutral-200 transition duration-200 hover:border-(--brand) hover:bg-neutral-900 hover:text-white motion-safe:hover:-translate-y-0.5"
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 shrink-0 fill-current text-neutral-500 transition-colors duration-200 group-hover:text-(--brand)">
                     <path d={tech.path} />

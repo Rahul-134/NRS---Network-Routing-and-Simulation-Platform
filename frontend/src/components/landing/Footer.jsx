@@ -142,7 +142,7 @@ function FooterLink({ href, children }) {
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="text-sm text-neutral-400 transition-colors hover:text-emerald-300"
+      className="cursor-target text-sm text-neutral-400 transition-colors hover:text-emerald-300"
     >
       {children}
     </a>
@@ -171,7 +171,7 @@ export default function Footer({ logo, container }) {
             target="_blank"
             rel="noreferrer"
             aria-label="NRS on GitHub"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 text-neutral-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-300"
+            className="cursor-target flex h-10 w-10 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 text-neutral-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-300"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px] fill-current">
               <path d={githubPath} />
